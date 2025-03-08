@@ -24,7 +24,7 @@ setTimeout(()=>{
     if (value.startsWith(kind + '_'))
       value = value.substring(kind.length + 1);
     if (value.length == 32)
-      value = value.substring(0, 12) + '-' + value.substring(12, 16) + '-' + value.substring(16, 20) + '-' + value.substring(20, 24) + '-' + value.substring(24, 32);
+      value = value.substring(0, 8) + '-' + value.substring(8, 12) + '-' + value.substring(12, 16) + '-' + value.substring(16, 20) + '-' + value.substring(20, 32);
     if (value.length == 36)
       value = kind + '_' + value;
     return value;
