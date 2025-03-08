@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<title>Redirect to VRChat Help Desk User Moderation Request</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<script>
+setTimeout(()=>{
+  function base64ToHex(str)
+  {
+    const raw = window.atob(str.replaceAll('-', '+').replaceAll('_', '/'));
+    let result = '';
+    for (let i = 0; i < raw.length; i++)
+    {
+      const hex = raw.charCodeAt(i).toString(16);
+      result += (hex.length === 2 ? hex : ('0' + hex));
+    }
+    return result;
+  }
+  function vrcid(kind, value)
+  {
+    if (value.length == 22)
+      value = base64ToHex(value);
+    if (value.startsWith(kind + '_'))
+      value = value.substring(kind.length + 1);
+    if (value.length == 32)
+      value = value.substring(0, 12) + '-' + value.substring(12, 16) + '-' + value.substring(16, 20) + '-' + value.substring(20, 24) + '-' + value.substring(24, 32);
+    if (value.length == 36)
+      value = kind + '_' + value;
+    return value;
+  }
+  const params = new URLSearchParams(window.location.search);
+  let res = 'https://help.vrchat.com/hc/en-us/requests/new?ticket_form_id=1500000182242';
+  if (params.has('e'))
+    res = res + '&tf_anonymous_requester_email=' + encodeURIComponent(params.get('e'));
+  res = res + '&tf_360056455174=user_report';
+  if (params.has('r'))
+    res = res + '&tf_360057451993=' + vrcid('usr', params.get('r'));
+  if (params.has('t'))
+    res = res + '&tf_1500001445142=' + vrcid('usr', params.get('t'));
+  if (params.has('s'))
+    res = res + '&tf_subject=' + encodeURIComponent(params.get('s'));
+  let d = '';
+  if (params.has('d'))
+    d = d + params.get('d').replace(/\r?\n/i, '<br>');
+  d = d + '<p>';
+  if (params.has('M'))
+  {
+    d = d + "User's Group internal moderation tags:<ul>";
+    const mt = params.get('M').split('`');
+    for (let i = 0; i < mt.length; i++)
+      d = d + '<li>' + mt[i] + '</li>';
+    d = d + "</ul>";
+  }
+  d = d + 'Partially autofilled with ';
+  if (params.has('N'))
+  {
+    d = d + params.get('N');
+    if (params.has('V'))
+      d = d + ' version ' + params.get('V');
+  }
+  else
+    d = d + "the Sybyline Network's VRChat Help Desk URL shortener";
+  if (params.has('G'))
+    d = d + '<br>' + 'Group ID: ' + vrcid('grp', params.get('G'));
+  if (params.has('A'))
+    d = d + '<br>' + 'Audit ID: ' + vrcid('gaud', params.get('A'));
+  d = d + '</p>';
+  if (d)
+    res = res + '&tf_description=' + encodeURIComponent(d);
+  window.location.replace(res);
+},0);
+</script>
+</head>
+<body>
+</body>
+</html>
