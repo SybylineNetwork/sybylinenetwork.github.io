@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<title>Redirect to VRCX</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<script>
+setTimeout(()=>{
+  const status = document.getElementById('status');
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('type'))
+  {
+    const type = params.get('type');
+    switch (type)
+    {
+      case 'user': {
+        if (params.has('userId'))
+        {
+          const userId = params.get('userId');
+          window.location.href = 'vrcx://user/' + userId;
+          status.innerHTML = '<h1>Opening VRCX user dialog for <code>'+userId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>userId</code></h1>';
+        }
+      } break;
+      case 'avatar': {
+        if (params.has('avatarId'))
+        {
+          const avatarId = params.get('avatarId');
+          window.location.href = 'vrcx://avatar/' + avatarId;
+          status.innerHTML = '<h1>Opening VRCX avatar dialog for <code>'+avatarId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>avatarId</code></h1>';
+        }
+      } break;
+      case 'avatar_switch': {
+        if (params.has('avatarId'))
+        {
+          const avatarId = params.get('avatarId');
+          window.location.href = 'vrcx://switchavatar/' + avatarId;
+          status.innerHTML = '<h1>Opening VRCX avatar switch dialog for <code>'+avatarId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>avatarId</code></h1>';
+        }
+      } break;
+      case 'group': {
+        if (params.has('groupId'))
+        {
+          const groupId = params.get('groupId');
+          window.location.href = 'vrcx://group/' + groupId;
+          status.innerHTML = '<h1>Opening VRCX group dialog for <code>'+groupId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>groupId</code></h1>';
+        }
+      } break;
+      case 'world': {
+        if (params.has('worldId'))
+        {
+          const worldId = params.get('worldId');
+          window.location.href = 'vrcx://world/' + worldId;
+          status.innerHTML = '<h1>Opening VRCX world dialog for <code>'+worldId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>worldId</code></h1>';
+        }
+      } break;
+      case 'world_instance': {
+        if (params.has('worldId'))
+        {
+          const worldId = params.get('worldId');
+          if (params.has('instanceId'))
+          {
+            const instanceId = params.get('instanceId');
+            window.location.href = 'vrcx://world/' + worldId + ':' + instanceId;
+            status.innerHTML = '<h1>Opening VRCX world instance dialog for <code>'+worldId+':'+instanceId+'</code>...</h1>';
+          }
+          else
+          {
+            status.innerHTML = '<h1>Missing query parameter <code>instanceId</code></h1>';
+          }
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>worldId</code></h1>';
+        }
+      } break;
+      case 'world_instance_unlocked': {
+        if (params.has('instanceId'))
+        {
+          const instanceId = params.get('instanceId');
+          window.location.href = 'vrcx://world/https://vrch.at/' + instanceId;
+          status.innerHTML = '<h1>Opening VRCX world unlocked instance dialog for <code>'+instanceId+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>instanceId</code></h1>';
+        }
+      } break;
+      case 'avatar_import': {
+        if (params.has('avatarIds'))
+        {
+          const avatarIds = params.get('avatarIds');
+          window.location.href = 'vrcx://import/avatar/' + avatarIds;
+          status.innerHTML = '<h1>Opening VRCX avatar favorites import dialog for <code>'+avatarIds+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>avatarIds</code></h1>';
+        }
+      } break;
+      case 'world_import': {
+        if (params.has('worldIds'))
+        {
+          const worldIds = params.get('worldIds');
+          window.location.href = 'vrcx://import/world/' + worldIds;
+          status.innerHTML = '<h1>Opening VRCX world favorites import dialog for <code>'+worldIds+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>worldIds</code></h1>';
+        }
+      } break;
+      case 'friend_import': {
+        if (params.has('userIds'))
+        {
+          const userIds = params.get('userIds');
+          window.location.href = 'vrcx://import/friend/' + userIds;
+          status.innerHTML = '<h1>Opening VRCX friends favorites import dialog for <code>'+userIds+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>userIds</code></h1>';
+        }
+      } break;
+      case 'avatar_add_db': {
+        if (params.has('dbUrl'))
+        {
+          const dbUrl = params.get('dbUrl');
+          window.location.href = 'vrcx://addavatardb/' + dbUrl;
+          status.innerHTML = '<h1>Opening VRCX remote avatar database provider dialog for <code>'+dbUrl+'</code>...</h1>';
+        }
+        else
+        {
+          status.innerHTML = '<h1>Missing query parameter <code>userIds</code></h1>';
+        }
+      } break;
+      default: {
+        status.innerHTML = '<h1>Unknown type <code>'+type+'</code></h1>';
+      } break;
+    }
+  }
+  else
+  {
+    status.innerHTML = '<h1>Missing query parameter <code>type</code></h1>';
+  }
+},0);
+</script>
+</head>
+<body>
+<div id="status">Parsing query parameters...</div>
+</body>
+</html>
