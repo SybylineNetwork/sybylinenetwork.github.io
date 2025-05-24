@@ -30,14 +30,256 @@ setTimeout(()=>{
     return value;
   }
   const params = new URLSearchParams(window.location.search);
-  let res = 'https://help.vrchat.com/hc/en-us/requests/new?ticket_form_id=1500000182242';
+  let res = 'https://help.vrchat.com/hc/en-us/requests/new?ticket_form_id=';
+  let kind = '';
+  let form = '';
+  let targetId = '';
+  if (params.has('t'))
+  {
+    targetId = params.get('t');
+  }
+  if (params.has('f'))
+  {
+    kind = params.get('f');
+  }
+  else if (targetId.startsWith('avtr_'))
+  {
+    kind = 'content_report_avatar';
+  }
+  else if (targetId.startsWith('wrld_') || targetId.startsWith('wld_'))
+  {
+    kind = 'content_report_world';
+  }
+  else if (targetId.startsWith('grp_'))
+  {
+    kind = 'content_report_group';
+  }
+  else if (targetId.startsWith('usr_'))
+  {
+    kind = 'accountreport_issue_not_described';
+  }
+  else if (targetId.startsWith('prnt_'))
+  {
+    kind = 'account_report_prints';
+  }
+  else
+  {
+    kind = 'user_report';
+  }
+  
+  switch (kind)
+  {
+  case 'support':
+    res = res + '360006750513';
+    form = 'support';
+  break;
+  case 'age_verification_issues':
+  case 'application_issues':
+  case 'account_support':
+  case '2fa_support':
+  case 'website_support':
+  case 'i_can_t_create_a_vrchat_account':
+  case 'the_vrchat_application_keeps_crashing':
+  case 'connection_issues':
+  case 'performance/fps_issues':
+  case 'issues_linking_with_steam/oculus/viveport':
+  case 'i_m_having_problems_with_audio/voice':
+  case 'video_players_aren_t_working':
+  case 'issues_with_favorites':
+  case 'issues_with_invites/notifications':
+  case 'i_m_stuck_in_an_avatar':
+  case 'i_can_t_see_other_users':
+  case 'i_m_having_issues_with_the_vrchat_sdk':
+  case 'i_m_having_issues_with_a_vrchat_plus_subscription':
+  case 'ce_support':
+  case 'data_privacy_request':
+    res = res + '360006750513&tf_1500001394041='+kind;
+    form = 'support';
+  break;
+  case 'moderation':
+    res = res + '41536165070483';
+    form = 'moderation';
+  break;
+  case 'ban_appeal':
+    case 'ban':
+    case 'bans':
+    res = res + '41536165070483&tf_360056455174=ban_appeal';
+    form = 'moderation';
+  break;
+  case 'user_report':
+    case 'user':
+    case 'users':
+    res = res + '41536165070483&tf_1500001394041=user_report';
+    form = 'moderation';
+  break;
+  case 'content_report':
+    case 'content':
+    case 'contents':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=content_report';
+    form = 'moderation';
+  break;
+  case 'content_report_avatar':
+    case 'avatar':
+    case 'avatars':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=content_report&tf_41535943048211=content_report_avatar';
+    form = 'moderation';
+  break;
+  case 'content_report_world':
+    case 'world':
+    case 'worlds':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=content_report&tf_41535943048211=content_report_world';
+    form = 'moderation';
+  break;
+  case 'content_report_group':
+    case 'group':
+    case 'groups':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=content_report&tf_41535943048211=content_report_group';
+    form = 'moderation';
+  break;
+  case 'contentreport_issue_not_described':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=content_report&tf_41535943048211=contentreport_issue_not_described';
+    form = 'moderation';
+  break;
+  case 'account_report':
+    case 'account':
+    case 'accounts':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report';
+    form = 'moderation';
+  break;
+  case 'account_report_prints':
+    case 'prints':
+    case 'print':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_prints';
+    form = 'moderation';
+  break;
+  case 'account_report_emoji':
+    case 'emoji':
+    case 'emojis':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_emoji';
+    form = 'moderation';
+  break;
+  case 'account_report_stickers':
+    case 'stickers':
+    case 'sticker':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_stickers';
+    form = 'moderation';
+  break;
+  case 'account_report_gallery':
+    case 'gallery':
+    case 'gallerys':
+    case 'galleries':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_gallery';
+    form = 'moderation';
+  break;
+  case 'account_report_profile':
+    case 'profile':
+    case 'prifiles':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_profile';
+    form = 'moderation';
+  break;
+  case 'account_report_user_icon':
+    case 'user_icon':
+    case 'user_icons':
+    case 'usericon':
+    case 'usericons':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_user_icon';
+    form = 'moderation';
+  break;
+  case 'take_it_down_act':
+    case 'take_it_down_act':
+    case 'take_it_down_acts':
+    case 'takeitdownact':
+    case 'takeitdownacts':
+    case 'take_it_down':
+    case 'take_it_downs':
+    case 'takeitdown':
+    case 'takeitdowns':
+    case 'dmca':
+    case 'dmcas':
+    case 'copyright':
+    case 'copyrights':
+    case 'license':
+    case 'licenses':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=take_it_down_act';
+    form = 'moderation';
+  break
+  case 'accountreport_issue_not_described':
+    res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=accountreport_issue_not_described';
+    form = 'moderation';
+  break;
+  case 'security':
+    res = res + '1500001130621';
+    form = 'security';
+  break;
+  case 'recovery':
+    res = res + '1900000725685';
+    form = 'recovery';
+  break;
+  case 'marketplace':
+    res = res + '41321603799059';
+    form = 'marketplace';
+  break;
+  case 'i_m_a_user_that_needs_help_with_a_marketplace_purchase':
+    res = res + '41321603799059&tf_41321210685203=i_m_a_user_that_needs_help_with_a_marketplace_purchase';
+    form = 'marketplace';
+  break;
+  }
+  
+  switch (form)
+  {
+  case 'support':
+    if (params.has('c'))
+      res = res + '&tf_1500001394041=' + encodeURIComponent(params.get('c'));
+    if (params.has('r'))
+      res = res + '&tf_360057451993=' + vrcid('usr', params.get('r'));
+    if (params.has('p'))
+      res = res + '&tf_360057451993=' + encodeURIComponent(params.get('p'));
+  break;
+  case 'moderation':
+    if (params.has('c'))
+      res = res + '&tf_360056455174=' + encodeURIComponent(params.get('c'));
+    if (params.has('t'))
+      res = res + '&tf_41535925078291=' + encodeURIComponent(params.get('t'));
+    if (params.has('T'))
+      res = res + '&tf_41535943048211=' + encodeURIComponent(params.get('T'));
+    if (params.has('C'))
+      res = res + '&tf_41536179133203=' + encodeURIComponent(params.get('C'));
+    if (params.has('A'))
+      res = res + '&tf_41536076540179=' + encodeURIComponent(params.get('A'));
+    if (params.has('a'))
+      res = res + '&tf_41537175838995=' + vrcid('usr', params.get('a'));
+  break;
+  case 'security':
+    if (params.has('v'))
+      res = res + '&tf_14871541233043=' + encodeURIComponent(params.get('v'));
+    if (params.has('r'))
+      res = res + '&tf_14871567333267=' + encodeURIComponent(params.get('r'));
+    if (params.has('i'))
+      res = res + '&tf_14871574761875=' + encodeURIComponent(params.get('i'));
+    if (params.has('c'))
+      res = res + '&tf_1900000428585=' + encodeURIComponent(params.get('c'));
+  break;
+  case 'recovery':
+    if (params.has('c'))
+      res = res + '&tf_14871541233043=' + encodeURIComponent(params.get('c'));
+    if (params.has('r'))
+      res = res + '&tf_360057451993=' + vrcid('usr', params.get('r'));
+    if (params.has('t'))
+      res = res + '&tf_1900004384185=' + encodeURIComponent(params.get('t'));
+  break;
+  case 'marketplace':
+    if (params.has('r'))
+      res = res + '&tf_360057451993=' + vrcid('usr', params.get('r'));
+    if (params.has('c'))
+      res = res + '&tf_41321210685203=' + encodeURIComponent(params.get('c'));
+    if (params.has('p'))
+      res = res + '&tf_41321304248723=' + encodeURIComponent(params.get('p'));
+  break;
+  }
+  
+  // universal fields
   if (params.has('e'))
     res = res + '&tf_anonymous_requester_email=' + encodeURIComponent(params.get('e'));
-  res = res + '&tf_360056455174=user_report';
-  if (params.has('r'))
-    res = res + '&tf_360057451993=' + vrcid('usr', params.get('r'));
-  if (params.has('t'))
-    res = res + '&tf_1500001445142=' + vrcid('usr', params.get('t'));
   if (params.has('s'))
     res = res + '&tf_subject=' + encodeURIComponent(params.get('s'));
   let d = '';
