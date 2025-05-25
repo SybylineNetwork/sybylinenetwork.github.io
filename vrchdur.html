@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <script>
-setTimeout(()=>{
+setTimeout(async ()=>{
   function base64ToHex(str)
   {
     const raw = window.atob(str.replaceAll('-', '+').replaceAll('_', '/'));
@@ -28,6 +28,35 @@ setTimeout(()=>{
     if (value.length == 36)
       value = kind + '_' + value;
     return value;
+  }
+  async function vrcfiletype(fileId)
+  {
+    try
+    {
+      const response = await fetch('https://vrchat.com/api/1/file/' + targetId);
+      const json = await response.json();
+      if (('vrcw' == json.extension) || ('application/x-world' == json.mimeType) || json.name.startsWith('World - '))
+        return 'content_report_world';
+      if (('vrca' == json.extension) || ('application/x-avatar' == json.mimeType) || json.name.startsWith('Avatar - '))
+        return 'content_report_avatar';
+      if (json.tags.includes('gallery'))
+        return 'account_report_gallery';
+      if (json.tags.includes('icon'))
+        return 'account_report_user_icon';
+      if (json.tags.includes('invitePhoto'))
+        return 'account_report_gallery'; // or 'accountreport_issue_not_described', not sure what's best
+      if (json.tags.includes('emoji'))
+        return 'account_report_emoji';
+      if (json.tags.includes('sticker'))
+        return 'account_report_stickers';
+      if (json.tags.includes('print'))
+        return 'account_report_prints';
+    }
+    catch (error)
+    {
+      console.error('Error getting metadata for ' + targetId + ': ' + error.message);
+    }
+    return 'accountreport_issue_not_described';
   }
   const params = new URLSearchParams(window.location.search);
   let res = 'https://help.vrchat.com/hc/en-us/requests/new?ticket_form_id=';
@@ -65,6 +94,7 @@ setTimeout(()=>{
   }
   else if (targetId.startsWith('file_'))
   {
+    
     kind = 'accountreport_issue_not_described';
   }
   else
@@ -303,37 +333,50 @@ setTimeout(()=>{
   if (params.has('s'))
     res = res + '&tf_subject=' + encodeURIComponent(params.get('s'));
   let d = '';
+  
   if (params.has('d'))
+  {
     d = d + params.get('d').replace(/\r?\n/i, '<br>');
-  d = d + '<p>';
-  if (params.has('M'))
-  {
-    d = d + "User's Group internal moderation tags:<ul>";
-    const mt = params.get('M').split('`');
-    for (let i = 0; i < mt.length; i++)
-      d = d + '<li>' + mt[i] + '</li>';
-    d = d + "</ul>";
-  }
-  d = d + 'Partially autofilled with ';
-  if (params.has('N'))
-  {
-    d = d + params.get('N');
-    if (params.has('V'))
-      d = d + ' version ' + params.get('V');
   }
   else
-    d = d + "the Sybyline Network's VRChat Help Desk URL shortener";
-  if (params.has('G'))
-    d = d + '<br>' + 'Group ID: ' + vrcid('grp', params.get('G'));
-  if (params.has('A'))
-    d = d + '<br>' + 'Audit ID: ' + vrcid('gaud', params.get('A'));
-  d = d + '</p>';
+  {
+    if (params.has('D'))
+      d = d + params.get('D').replace(/\r?\n/i, '<br>');
+    d = d + '<p>';
+    if (params.has('M'))
+    {
+      d = d + "User's Group internal moderation tags:<ul>";
+      const mt = params.get('M').split('`');
+      for (let i = 0; i < mt.length; i++)
+        d = d + '<li>' + mt[i] + '</li>';
+      d = d + "</ul>";
+    }
+    d = d + 'Partially autofilled with ';
+    if (params.has('N'))
+    {
+      d = d + params.get('N');
+      if (params.has('V'))
+        d = d + ' version ' + params.get('V');
+    }
+    else
+      d = d + "the Sybyline Network's VRChat Help Desk URL shortener";
+    if (params.has('G'))
+      d = d + '<br>' + 'Group ID: ' + vrcid('grp', params.get('G'));
+    if (params.has('A'))
+      d = d + '<br>' + 'Audit ID: ' + vrcid('gaud', params.get('A'));
+    d = d + '</p>';
+  }
   if (d)
     res = res + '&tf_description=' + encodeURIComponent(d);
-  window.location.replace(res);
+
+  if (params.has('N'))
+    document.getElementById('debug').innerHTML = 'Link: <a href="' + res + '"><code>' + res + '</code></a>';
+  else
+    window.location.replace(res);
 },0);
 </script>
 </head>
 <body>
+<div id="link"></div>
 </body>
 </html>
