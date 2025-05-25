@@ -34,6 +34,7 @@ setTimeout(()=>{
   let kind = '';
   let form = '';
   let targetId = '';
+  let moderationTargetIsAccount = false;
   if (params.has('t'))
   {
     targetId = params.get('t');
@@ -61,6 +62,10 @@ setTimeout(()=>{
   else if (targetId.startsWith('prnt_'))
   {
     kind = 'account_report_prints';
+  }
+  else if (targetId.startsWith('file_'))
+  {
+    kind = 'accountreport_issue_not_described';
   }
   else
   {
@@ -145,24 +150,28 @@ setTimeout(()=>{
     case 'accounts':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_prints':
     case 'prints':
     case 'print':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_prints';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_emoji':
     case 'emoji':
     case 'emojis':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_emoji';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_stickers':
     case 'stickers':
     case 'sticker':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_stickers';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_gallery':
     case 'gallery':
@@ -170,12 +179,14 @@ setTimeout(()=>{
     case 'galleries':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_gallery';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_profile':
     case 'profile':
     case 'prifiles':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_profile';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'account_report_user_icon':
     case 'user_icon':
@@ -184,6 +195,7 @@ setTimeout(()=>{
     case 'usericons':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=account_report_user_icon';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'take_it_down_act':
     case 'take_it_down_act':
@@ -202,10 +214,12 @@ setTimeout(()=>{
     case 'licenses':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=take_it_down_act';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break
   case 'accountreport_issue_not_described':
     res = res + '41536165070483&tf_1500001394041=user_report&tf_41535925078291=account_report&tf_41536076540179=accountreport_issue_not_described';
     form = 'moderation';
+    moderationTargetIsAccount = true;
   break;
   case 'security':
     res = res + '1500001130621';
@@ -240,14 +254,20 @@ setTimeout(()=>{
       res = res + '&tf_360056455174=' + encodeURIComponent(params.get('c'));
     if (params.has('t'))
       res = res + '&tf_41535925078291=' + encodeURIComponent(params.get('t'));
-    if (params.has('T'))
-      res = res + '&tf_41535943048211=' + encodeURIComponent(params.get('T'));
-    if (params.has('C'))
-      res = res + '&tf_41536179133203=' + encodeURIComponent(params.get('C'));
-    if (params.has('A'))
-      res = res + '&tf_41536076540179=' + encodeURIComponent(params.get('A'));
-    if (params.has('a'))
-      res = res + '&tf_41537175838995=' + vrcid('usr', params.get('a'));
+    if (moderationTargetIsAccount)
+    {
+      if (params.has('T'))
+        res = res + '&tf_41536076540179=' + encodeURIComponent(params.get('T'));
+      if (params.has('i'))
+        res = res + '&tf_41537175838995=' + vrcid('usr', params.get('i'));
+    }
+    else
+    {
+      if (params.has('T'))
+        res = res + '&tf_41535943048211=' + encodeURIComponent(params.get('T'));
+      if (params.has('i'))
+        res = res + '&tf_41536179133203=' + encodeURIComponent(params.get('i'));
+    }
   break;
   case 'security':
     if (params.has('v'))
