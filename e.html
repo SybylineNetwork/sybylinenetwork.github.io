@@ -7,12 +7,13 @@
 <script>
 setTimeout(async () => {
   if (location.search) {
-    const blob = atob(location.search.substring(1).replaceAll('-', '+').replaceAll('_', '/'));
-    if (blob.length == 32) {
-      let _index = 0;
-      const X = length => Array.from(blob.slice(_index, _index += length)).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
-      location.replace(`https://vrchat.com/home/group/grp_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}/calendar/cal_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}`);
-      return;
+    const raw = location.search.substring(1);
+    if (raw.length == 43) {
+        const blob = atob(raw.replaceAll('-', '+').replaceAll('_', '/'));
+        let _index = 0;
+        const X = length => Array.from(blob.slice(_index, _index += length)).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+        location.replace(`https://vrchat.com/home/group/grp_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}/calendar/cal_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}`);
+        return;
     }
     document.getElementById('info').innerHTML = 'Invalid query string';
   }
@@ -53,7 +54,8 @@ setTimeout(async () => {
 </script>
 </head>
 <body>
-<p><div>VRChat Group Event link utility</div><p>
+<p><h2>VRChat Group Event link utility</h2><p>
+<p>This utility solely exists to have a way to link to VRChat Group Event in a Discord Event location.<p>
 <p><div id="info"></div></p>
 <table>
 <tr>
