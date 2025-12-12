@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+<title>Redirect to VRChat Group Event</title>
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script>
+setTimeout(async () => {
+  if (location.search) {
+    const blob = atob(location.search.substring(1).replaceAll('-', '+').replaceAll('_', '/'));
+    if (blob.length == 32) {
+      let _index = 0;
+      const X = length => Array.from(blob.slice(_index, _index += length)).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join('');
+      location.replace(`https://vrchat.com/home/group/grp_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}/calendar/cal_${X(4)}-${X(2)}-${X(2)}-${X(2)}-${X(6)}`);
+      return;
+    }
+    document.getElementById('info').innerHTML = 'Invalid query string';
+  }
+  const groupPattern = /^grp_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+        eventPattern = /^cal_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/,
+        urlPattern = /^.*(grp_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/calendar\/(cal_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
+  let groupId, eventId;
+  function updateOutput() {
+    const output = document.getElementById('output');
+    if (groupId && eventId)
+    {
+      const hex = (groupId.substring(4) + eventId.substring(4)).replaceAll(/[^0-9a-f]/g, '');
+      const b64 = btoa(String.fromCharCode(...Array(32).keys().map(i => i * 2).map(i => parseInt(hex.substring(i, i + 2), 16)))).replaceAll('+', '-').replaceAll('/', '_').replaceAll('=', '');
+      const url = `${location.origin}${location.pathname}?${b64}`;
+      output.innerHTML = `<button onclick="navigator.clipboard.writeText('${url}')">Copy to clipboard</button> <code>${url}</code>`;
+    }
+    else
+    {
+      output.innerHTML = groupId ? 'Invalid Event ID.' : eventId ? 'Invalid Group ID.' : 'Invalid Group and Event IDs.';
+    }
+  }
+  document.getElementById('groupId').addEventListener('input', event => {
+    groupId = event.target.value;
+    if (!groupPattern.test(groupId)) groupId = void 0;
+    updateOutput();
+  });
+  document.getElementById('eventId').addEventListener('input', event => {
+    eventId = event.target.value;
+    if (!eventPattern.test(eventId)) eventId = void 0;
+    updateOutput();
+  });
+  document.getElementById('entireUrl').addEventListener('input', event => {
+    const match = urlPattern.exec(event.target.value);
+    [groupId, eventId] = match ? match.slice(1, 3) : Array(2);
+    updateOutput();
+  });
+},0);
+</script>
+</head>
+<body>
+<p><div>VRChat Group Event link utility</div><p>
+<p><div id="info"></div></p>
+<table>
+<tr>
+<td align="right"><label for="groupId">Group ID:</label></td>
+<td><input id="groupId" type="text" size="40" /></td>
+</tr>
+<tr>
+<td align="right"><label for="eventId">Calendar Event ID:</label></td>
+<td><input id="eventId" type="text" size="40" /></td>
+</tr>
+<tr>
+<td align="right"><label for="entireUrl">Or just the URL:</label></td>
+<td><input id="entireUrl" type="text" size="120" /></td>
+</tr>
+<tr>
+<td align="right"><label for="output">Output:</label></td>
+<td><div id="output">Invalid Group and Event IDs.</div></td>
+</tr>
+</table>
+</body>
+</html>
