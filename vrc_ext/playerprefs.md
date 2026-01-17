@@ -152,7 +152,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `LocalPlayerMods_{UserID}`                                          | `json`   | `{ "<UserID>": [ <integer> ], ... }` |
 | `LocalPlayerMods_{UserID}_Migrated`                                 | `json`   | `[ <integer>, <integer> ]` |
 | `LocationContext`                                                   | `int`    | 0-2  |
-| `LocationContext_World`                                             | `string` | `<WorldID>|<string>`, where the last string is the world name |
+| `LocationContext_World`                                             | `string` | `<WorldID>\|<string>`, where the last string is the world name |
 | `LOD_QUALITY`                                                       | `int`    |      |
 | `LOGGING_ENABLED`                                                   | `bool`   |      |
 | `migrated-local-pmods-{UserID}-HideAvatar`                          | `bool`   |      |
@@ -652,7 +652,7 @@ Here is a shortened list of (subjectively) more useful entries.
 | `I2 Language`                           | `string` |      |
 | `INSTANCE_RENAME_HISTORY_{UserID}`      | `json`   | `<History(string)>` |
 | `LocationContext`                       | `int`    | 0-2  |
-| `LocationContext_World`                 | `string` | `<WorldID>|<string>`, where the last string is the world name |
+| `LocationContext_World`                 | `string` | `<WorldID>\|<string>`, where the last string is the world name |
 | `LOD_QUALITY`                           | `int`    |      |
 | `LOGGING_ENABLED`                       | `bool`   |      |
 | `PlayerHeight`                          | `float`  | meters |
