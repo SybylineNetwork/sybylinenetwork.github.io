@@ -81,7 +81,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `AUDIO_UI_ENABLED`                                                  | `bool`   |      |
 | `AUDIO_UI_STEAMAUDIO`                                               | `float`  |      |
 | `{UserID}_avatar_tab_start`                                         | `string` |      |
-| `AVATAR_WORN_HISTORY_{UserID}`                                      | `json`   | `<History(AvatarID)>` |
+| `AVATAR_WORN_HISTORY_{UserID}`                                      | `json`   | [`<History(AvatarID)>`](#schema_history) |
 | `{UserID}_avatarProxyAlwaysShowExplicit`                            | `bool`   |      |
 | `{UserID}_avatarProxyAlwaysShowFriends`                             | `bool`   |      |
 | `{UserID}_avatarProxyShowAtRange`                                   | `float`  |      |
@@ -92,8 +92,8 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `{UserID}_BACKGROUND_MATERIAL_{UserID}`                             | `string` |      |
 | `BestRegionCache`                                                   | `int`    | 0-3? |
 | `COLOR_PALETTE_EVENT_{UserID}`                                      | `bool`   |      |
-| `COLOR_PALETTES_{UserID}`                                           | `json`   | `1[ <ColorPalette>,  ... ]` The entry always seems to begin with a `1` character, the significance of which is unknown. |
-| `COLOR_PALETTES_CURRENT_{UserID}`                                   | `json`   | `<ColorPalette>` |
+| `COLOR_PALETTES_{UserID}`                                           | `json`   | [`1[ <ColorPalette>,  ... ]`](#schema_colorpalette) The entry always seems to begin with a `1` character, the significance of which is unknown. |
+| `COLOR_PALETTES_CURRENT_{UserID}`                                   | `json`   | [`<ColorPalette>`](#schema_colorpalette) |
 | `CosmeticsSectionRedirect_Settings`                                 | `bool`   |      |
 | `CosmeticsSectionRedirect_VRCPlus`                                  | `bool`   |      |
 | `{UserID}_currentShowMaxNumberOfAvatarsEnabled`                     | `bool`   |      |
@@ -111,8 +111,8 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `Dashboard_Emojis_Foldout{1-8}`                                     | `bool`   |      |
 | `DEFAULT_GROUP_{UserID}`                                            | `string` |      |
 | `DefaultWorldList_{UserID}`                                         | `string` |      |
-| `{UserID}_DroneControllerSettings`                                  | `json`   | `<DroneControllerSettings>` |
-| `{UserID}_DroneFlightPresetValues`                                  | `json`   | `<DroneFlightPresetValues>` |
+| `{UserID}_DroneControllerSettings`                                  | `json`   | [`<DroneControllerSettings>`](#schema_dronecontrollersettings) |
+| `{UserID}_DroneFlightPresetValues`                                  | `json`   | [`<DroneFlightPresetValues>`](#schema_droneflightpresetvalues) |
 | `{UserID}_enableSliderSnapping`                                     | `bool`   |      |
 | `expiredSeenReminderPopup{UserID}`                                  | `string` | `MM/dd/yyyy HH:mm:ss`: [DateTime.ToString(CultureInfo.InvariantCulture)](https://learn.microsoft.com/en-us/dotnet/api/system.datetime.tostring) |
 | `FaceMirrorOwner`                                                   | `int`    |      |
@@ -131,7 +131,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `FPS_LIMIT`                                                         | `int`    |      |
 | `FPSCapType`                                                        | `int`    |      |
 | `FPSType`                                                           | `int`    |      |
-| `FRIEND_LAST_VISIT_HISTORY_{UserID}`                                | `json`   | `<History(UserID)>` |
+| `FRIEND_LAST_VISIT_HISTORY_{UserID}`                                | `json`   | [`<History(UserID)>`](#schema_history) |
 | `{UserID}_GiftDropNoRefundAfterUsageAgreeToggle`                    | `bool`   |      |
 | *"Has Seen" flags* | | |
 | `{UserID}_has_seen_avm-explore-to-cm-migration`                     | `bool`   |      |
@@ -140,13 +140,13 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `HasSeen_Callout_VRCPlusNewFeatures_{UserID}`                       | `bool`   |      |
 | `HasSeen_Callout_AVM_Explore_{UserID}`                              | `bool`   |      |
 | `HasSeen{*}{Callout|Popup}{UserID}`                                 | `bool`   |      |
-| `HUD_SETTINGS`                                                      | `json`   | `<HudSettings>` |
+| `HUD_SETTINGS`                                                      | `json`   | [`<HudSettings>`](#schema_hudsettings) |
 | `HUD_SMOOTHING_DESKTOP`                                             | `bool`   |      |
 | `HUD_SMOOTHING_VR`                                                  | `bool`   |      |
 | `I2 Language`                                                       | `string` |      |
 | `{UserID}_InPageCallout_Drone`                                      | `int`    |      |
 | `InQueueWidgetInfoShowcaseID`                                       | `int`    |      |
-| `INSTANCE_RENAME_HISTORY_{UserID}`                                  | `json`   | `<History(string)>` |
+| `INSTANCE_RENAME_HISTORY_{UserID}`                                  | `json`   | [`<History(string)>`](#schema_history) |
 | `{UserID}_LastExpiredSubscription`                                  | `string` |      |
 | `LastHudMode`                                                       | `int`    |      |
 | `LocalPlayerMods_{UserID}`                                          | `json`   | `{ "<UserID>": [ <integer> ], ... }` |
@@ -251,7 +251,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `PersonalMirror.WorldSpaceMirror`                                   | `bool`   |      |
 | `PlayerHeight`                                                      | `float`  | meters |
 | `PREF_HAND_TRACKING_TUTORIAL_COMPLETED`                             | `bool`   |      |
-| `Preload_Worlds_HISTORY_{UserID}`                                   | `json`   | `<History(WorldID)>` |
+| `Preload_Worlds_HISTORY_{UserID}`                                   | `json`   | [`<History(WorldID)>`](#schema_history) |
 | `{UserID}_PromotionData`                                            | `json`   | `{ "PromotionDataHandlers": [ { "<string>": <any>, ... }, ... ] }` |
 | *Quick Menu UI State* | | |
 | `QM.Audio.EarmuffMode`                                              | `bool`   |      |
@@ -273,7 +273,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `QM.Settings.Performance`                                           | `int`    |      |
 | `QM.Settings.TrackingAndIK`                                         | `int`    |      |
 | `QM.Settings.UIElements`                                            | `int`    |      |
-| `RECENTLY_VISITED_HISTORY_{UserID}`                                 | `json`   | `<History(UserID)>` |
+| `RECENTLY_VISITED_HISTORY_{UserID}`                                 | `json`   | [`<History(UserID)>`](#schema_history) |
 | `SavedWorldSearches{UserID}`                                        | `json`   | `{ "Searches": [ ... ] }` |
 | `Screenmanager Fullscreen mode`                                     | `int`    |      |
 | `Screenmanager Fullscreen mode Default`                             | `int`    |      |
@@ -308,7 +308,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `TOGGLE_STATE_FilterCalendarEventsModal_Platform_{*}`               | `bool`   |      |
 | *UI State* | | |
 | `UI.{UserID}.DragPanelTutorialComplete`                             | `bool`   |      |
-| `{UserID}_UI.Emojis.CustomGroup{0-2}`                               | `json`   | `<CustomGroup(ItemID)>` |
+| `{UserID}_UI.Emojis.CustomGroup{0-2}`                               | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `UI.HereMenu.BlockedByUsers`                                        | `int`    |      |
 | `UI.HereMenu.BlockedUsers`                                          | `int`    |      |
 | `UI.HereMenu.Users`                                                 | `int`    |      |
@@ -317,12 +317,12 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `UI.MainMenuSocialPage.BlockedUsers`                                | `int`    |      |
 | `UI.MenuPlacementZDepthVR`                                          | `float`  |      |
 | `UI.MotionSmoothingEnabled`                                         | `bool`   |      |
-| `{UserID}_UI.Props.CustomGroup{0}`                                  | `json`   | `<CustomGroup(ItemID)>` |
+| `{UserID}_UI.Props.CustomGroup{0}`                                  | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `UI.RecentlyUsedEmojiNames`                                         | `string` | `<FileID>(,<FileID>)*` |
 | `UI.RecentlyUsedEmojiNames.Count`                                   | `int`    |      |
 | `UI.RecentlyUsedEmojiNames{0-9}`                                    | `string` |      |
-| `{UserID}_UI.RecentlyUsedEmojis`                                    | `json`   | `<CustomGroup(ItemID)>` |
-| `{UserID}_UI.RecentlyUsedStickers`                                  | `json`   | `<CustomGroup(ItemID)>` |
+| `{UserID}_UI.RecentlyUsedEmojis`                                    | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
+| `{UserID}_UI.RecentlyUsedStickers`                                  | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `UI.RecentlyUsedStickers`                                           | `string` | `<FileID>(,<FileID>)*` |
 | `UI.RecentlyUsedStickers.Count`                                     | `int`    |      |
 | `UI.SelectedUser.DevTools`                                          | `int`    |      |
@@ -343,7 +343,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `UI.Settings.TrackingAndIk`                                         | `int`    |      |
 | `UI.Settings.UIElements`                                            | `int`    |      |
 | `UI.Settings.VisualAdjustments`                                     | `int`    |      |
-| `{UserID}_UI.Stickers.CustomGroup{0-2}`                             | `json`   | `<CustomGroup(ItemID)>` |
+| `{UserID}_UI.Stickers.CustomGroup{0-2}`                             | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `unity.cloud_userid`                                                | `string` | unity internal? |
 | `unity.player_session_count`                                        | `int`    | unity internal? |
 | `unity.player_sessionid`                                            | `string` | unity internal? |
@@ -641,30 +641,30 @@ Here is a shortened list of (subjectively) more useful entries.
 
 | Name                                    | Type     | Info |
 | --------------------------------------- | -------- | ---- |
-| `AVATAR_WORN_HISTORY_{UserID}`          | `json`   | `<History(AvatarID)>` |
+| `AVATAR_WORN_HISTORY_{UserID}`          | `json`   | [`<History(AvatarID)>`](#schema_history) |
 | `AVProMovieCapture-LastSavedFile`       | `string` | path to temporary video file |
-| `COLOR_PALETTES_{UserID}`               | `json`   | `1[ <ColorPalette>,  ... ]` The entry always seems to begin with a `1` character, the significance of which is unknown. |
-| `COLOR_PALETTES_CURRENT_{UserID}`       | `json`   | `<ColorPalette>` |
-| `{UserID}_DroneControllerSettings`      | `json`   | `<DroneControllerSettings>` |
-| `{UserID}_DroneFlightPresetValues`      | `json`   | `<DroneFlightPresetValues>` |
-| `FRIEND_LAST_VISIT_HISTORY_{UserID}`    | `json`   | `<History(UserID)>` |
-| `HUD_SETTINGS`                          | `json`   | `<HudSettings>` |
+| `COLOR_PALETTES_{UserID}`               | `json`   | [`1[ <ColorPalette>,  ... ]`](#schema_colorpalette) The entry always seems to begin with a `1` character, the significance of which is unknown. |
+| `COLOR_PALETTES_CURRENT_{UserID}`       | `json`   | [`<ColorPalette>`](#schema_colorpalette) |
+| `{UserID}_DroneControllerSettings`      | `json`   | [`<DroneControllerSettings>`](#schema_dronecontrollersettings) |
+| `{UserID}_DroneFlightPresetValues`      | `json`   | [`<DroneFlightPresetValues>`](#schema_droneflightpresetvalues) |
+| `FRIEND_LAST_VISIT_HISTORY_{UserID}`    | `json`   | [`<History(UserID)>`](#schema_history) |
+| `HUD_SETTINGS`                          | `json`   | [`<HudSettings>`](#schema_hudsettings) |
 | `I2 Language`                           | `string` |      |
-| `INSTANCE_RENAME_HISTORY_{UserID}`      | `json`   | `<History(string)>` |
+| `INSTANCE_RENAME_HISTORY_{UserID}`      | `json`   | [`<History(string)>`](#schema_history) |
 | `LocationContext`                       | `int`    | 0-2  |
 | `LocationContext_World`                 | `string` | `<WorldID>\|<string>`, where the last string is the world name |
 | `LOD_QUALITY`                           | `int`    |      |
 | `LOGGING_ENABLED`                       | `bool`   |      |
 | `PlayerHeight`                          | `float`  | meters |
-| `Preload_Worlds_HISTORY_{UserID}`       | `json`   | `<History(WorldID)>` |
-| `RECENTLY_VISITED_HISTORY_{UserID}`     | `json`   | `<History(UserID)>` |
+| `Preload_Worlds_HISTORY_{UserID}`       | `json`   | [`<History(WorldID)>`](#schema_history) |
+| `RECENTLY_VISITED_HISTORY_{UserID}`     | `json`   | [`<History(UserID)>`](#schema_history) |
 | `SavedWorldSearches{UserID}`            | `json`   | `{ "Searches": [ ... ] }` |
 | `SeatedPlayEnabled`                     | `bool`   |      |
-| `{UserID}_UI.Emojis.CustomGroup{0-2}`   | `json`   | `<CustomGroup(ItemID)>` |
-| `{UserID}_UI.Props.CustomGroup{0}`      | `json`   | `<CustomGroup(ItemID)>` |
-| `{UserID}_UI.RecentlyUsedEmojis`        | `json`   | `<CustomGroup(ItemID)>` |
-| `{UserID}_UI.RecentlyUsedStickers`      | `json`   | `<CustomGroup(ItemID)>` |
-| `{UserID}_UI.Stickers.CustomGroup{0-2}` | `json`   | `<CustomGroup(ItemID)>` |
+| `{UserID}_UI.Emojis.CustomGroup{0-2}`   | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
+| `{UserID}_UI.Props.CustomGroup{0}`      | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
+| `{UserID}_UI.RecentlyUsedEmojis`        | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
+| `{UserID}_UI.RecentlyUsedStickers`      | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
+| `{UserID}_UI.Stickers.CustomGroup{0-2}` | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `VRC_AFK_ENABLED`                       | `bool`   |      |
 | `VRC_CURRENT_LANGUAGE`                  | `string` |      |
 | `VRC_DEFAULT_DRONE_SKIN_PALETTE`        | `json`   | `{ "Current": "#2a4bfc,#38bbff,#0076ff", "Default": "#2a4bfc,#38bbff,#0076ff" }` |
@@ -704,14 +704,14 @@ Here is a shortened list of (subjectively) more useful entries.
 
 #### JSON Objects
 
-`History(Key)`: A mapping from ids to ISO `date-time`s such as `2026-01-02T03:04:05.0670890T`:
+<span id="schema_history">`History(Key)`</span>: A mapping from ids to ISO `date-time`s such as `2026-01-02T03:04:05.0670890T`:
 ```json
 {
     "<Key>": <date-time>,
     ...
 }
 ```
-`CustomGroup(Value)`: A named list of ids:
+<span id="schema_customgroup">`CustomGroup(Value)`</span>: A named list of ids:
 ```json
 {
     "name": <string>,
@@ -721,11 +721,11 @@ Here is a shortened list of (subjectively) more useful entries.
     ]
 }
 ```
-`ColorPalette`: An object describing custom UI colors, where `hex-color`is an RGB hex color such as `#69BB42`:
+<span id="schema_colorpalette">`ColorPalette`</span>: An object describing custom UI colors, where `hex-color`is an RGB hex color such as `#69BB42`:
 ```json
 {
     "name": <string>,
-    "id": <string>,,
+    "id": <string>,
     "highlights": <hex-color>,
     "icons": <hex-color>,
     "buttons": <hex-color>,
@@ -734,7 +734,7 @@ Here is a shortened list of (subjectively) more useful entries.
     "subtext": <hex-color>
 }
 ```
-`DroneControllerSettings`: An object describing the current Drone controls:
+<span id="schema_dronecontrollersettings">`DroneControllerSettings`</span>: An object describing the current Drone controls:
 ```json
 {
     "controllerType": <integer>,
@@ -755,7 +755,7 @@ Here is a shortened list of (subjectively) more useful entries.
     "audioFeedbackVolume": <float>
 }
 ```
-`DroneFlightPresetValues`: An object describing the current Drone controls:
+<span id="schema_droneflightpresetvalues">`DroneFlightPresetValues`</span>: An object describing the current Drone controls:
 ```json
 {
     "SelectedPreset": <integer>,
@@ -785,7 +785,7 @@ Here is a shortened list of (subjectively) more useful entries.
     }
 }
 ```
-`HudSettings`: An object describing what is visible on the HUD:
+<span id="schema_hudsettings">`HudSettings`</span>: An object describing what is visible on the HUD:
 ```json
 {
     "Mode": <integer>,
