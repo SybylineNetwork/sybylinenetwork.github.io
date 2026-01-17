@@ -643,7 +643,7 @@ Here is a shortened list of (subjectively) more useful entries.
 | --------------------------------------- | -------- | ---- |
 | `AVATAR_WORN_HISTORY_{UserID}`          | `json`   | `<History(AvatarID)>` |
 | `AVProMovieCapture-LastSavedFile`       | `string` | path to temporary video file |
-| `COLOR_PALETTES_{UserID}`               | `json`   | `<1[ <ColorPalette>,  ... ]>` The entry always seems to begin with a `1` character, the significance of which is unknown. |
+| `COLOR_PALETTES_{UserID}`               | `json`   | `1[ <ColorPalette>,  ... ]` The entry always seems to begin with a `1` character, the significance of which is unknown. |
 | `COLOR_PALETTES_CURRENT_{UserID}`       | `json`   | `<ColorPalette>` |
 | `{UserID}_DroneControllerSettings`      | `json`   | `<DroneControllerSettings>` |
 | `{UserID}_DroneFlightPresetValues`      | `json`   | `<DroneFlightPresetValues>` |
