@@ -314,6 +314,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `TOGGLE_STATE_FilterCalendarEventsModal_Language_{*}`               | `bool`   |      |
 | `TOGGLE_STATE_FilterCalendarEventsModal_Platform_{*}`               | `bool`   |      |
 | *UI State* | | |
+| `UI.{UserID}.WingState`                                             | `json`   | `{0-1}_{0-1}_{0-1}_{0-1}_{WingName}_{WingName}_{WingName}_{WingName}` |
 | `UI.{UserID}.DragPanelTutorialComplete`                             | `bool`   |      |
 | `{UserID}_UI.Emojis.CustomGroup{0-2}`                               | `json`   | [`<CustomGroup(ItemID)>`](#schema_customgroup) |
 | `UI.HereMenu.BlockedByUsers`                                        | `int`    |      |
