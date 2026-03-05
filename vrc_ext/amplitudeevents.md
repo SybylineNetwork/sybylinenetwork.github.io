@@ -423,6 +423,19 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 ### `Avatar_Tab_Viewed`
 
 
+### `Avatar_ViewAll_Page_View`
+
+```json
+{
+    "attribution": <string>,
+    "avatars_clicked": <array>, // element type: <string> // format: AvatarID
+    "avatars_clicked_count": <integer>,
+    "avatars_seen": <array>, // element type: <string> // format: AvatarID
+    "rowId": <string>,
+    "rowName": <string>
+}
+```
+
 ### `Avatar_ViewDetails`
 
 ```json
@@ -670,6 +683,25 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
     "contentName": <string>,
     "contentType": <string>,
     "reason": <string>
+}
+```
+
+### `Filter_AvatarFilter`
+
+```json
+{
+    "attribution": <string>,
+    "filter_availability": <string>,
+    "filter_performance": <string>,
+    "filter_results_count": <integer>,
+    "filter_selection_count": <integer>,
+    "filter_stylesIds": <array>, // element type: <string>
+    "filter_stylesNames": <array>, // element type: <string>
+    "filter_version": <string>,
+    "is_predefined_filter": <boolean>,
+    "rowId": <string>,
+    "rowName": <string>,
+    "search_text": <string>
 }
 ```
 
@@ -930,6 +962,7 @@ This event only has the Common Event Property `source`.
         "inventoryItemTemplateId": <string> // format: InventoryTemplateID
         },    ],
     "sellerId": <string>,
+    "subscriberExclusive": <boolean>,
     "attribution": <string>
 }
 ```
@@ -998,6 +1031,16 @@ This event only has the Common Event Property `source`.
     "printDate": <string>, // format: local-date
     "printWorldId": <string>, // format: WorldID
     "userId": <string> // format: UserID
+}
+```
+
+### `Portal_Skin_Changed`
+
+```json
+{
+    "portal_skin_id": <string>,
+    "portal_skin_is_default": <string>,
+    "portal_skin_name": <string>
 }
 ```
 
@@ -1153,7 +1196,10 @@ This event only has the Common Event Property `source`.
 ```json
 {
     "id": <string>,
+    "isVRCPlus_playlist": <boolean>,
     "name": <string>,
+    "playlistName": <string>,
+    "playlistPosition"; <integer>,
     "type": <string>
 }
 ```
@@ -1225,6 +1271,7 @@ This event only has the Common Event Property `source`.
 
 ```json
 {
+    "animated": <boolean>,
     "sourceUI": <string>,
     "stickerCollection": <string>,
     "stickerType": <string>,
