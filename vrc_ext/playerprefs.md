@@ -109,6 +109,9 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `CustomTrustLevel_{TrustLevel}_CanUseTriggers`                      | `bool`   |      |
 | `CustomTrustLevel_{TrustLevel}_CanUseUserIcons`                     | `bool`   |      |
 | `Dashboard_Emojis_Foldout{1-8}`                                     | `bool`   |      |
+| `DebugUIBackgroundOpacity`                                          | `float`  |      |
+| `DebugUILocalMovement_Desktop`                                      | `bool`   |      |
+| `DebugUILocalMovement_VR`                                           | `bool`   |      |
 | `DEFAULT_GROUP_{UserID}`                                            | `string` |      |
 | `DefaultWorldList_{UserID}`                                         | `string` |      |
 | `{UserID}_DroneControllerSettings`                                  | `json`   | [`<DroneControllerSettings>`](#schema_dronecontrollersettings) |
@@ -134,6 +137,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `FRIEND_LAST_VISIT_HISTORY_{UserID}`                                | `json`   | [`<History(UserID)>`](#schema_history) |
 | `{UserID}_GiftDropNoRefundAfterUsageAgreeToggle`                    | `bool`   |      |
 | *"Has Seen" flags* | | |
+| `{UserID}_has_opened_live_now_page`                                 | `bool`   |      |
 | `{UserID}_has_seen_avm-explore-to-cm-migration`                     | `bool`   |      |
 | `{UserID}_has_seen_event_discovery_in_beta`                         | `bool`   |      |
 | `HasSeen_Callout_AVM_Explore_{UserID}`                              | `bool`   |      |
@@ -148,6 +152,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `InQueueWidgetInfoShowcaseID`                                       | `int`    |      |
 | `INSTANCE_RENAME_HISTORY_{UserID}`                                  | `json`   | [`<History(string)>`](#schema_history) |
 | `{UserID}_LastExpiredSubscription`                                  | `string` |      |
+| `{UserID}_live_now_treatment_start_timestamp`                       | `int`    | seconds since Unix epoch |
 | `LastHudMode`                                                       | `int`    |      |
 | `LocalPlayerMods_{UserID}`                                          | `json`   | `{ "<UserID>": [ <integer> ], ... }` |
 | `LocalPlayerMods_{UserID}_Migrated`                                 | `json`   | `[ <integer>, <integer> ]` |
@@ -218,7 +223,8 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `PARTICLE_PHYSICS_QUALITY`                                          | `int`    |      |
 | `{UserID}_LastExpiredSubscription`                                  | `string` |      |
 | `{UserID}_LastExpiredSubscription`                                  | `string` |      |
-| `PIXEL_LIGHT_COUNT`                                                 | `int`    |      |
+| *Performance Sampler Settings* | | |
+| `PerformanceSampler.{StatisticName}.Enabled`                        | `bool`   |      |
 | *Personal Mirror Settings* | | |
 | `PersonalMirror.FaceMirrorOpacity`                                  | `float`  |      |
 | `PersonalMirror.FaceMirrorOpacityDesktop`                           | `float`  |      |
@@ -249,6 +255,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `PersonalMirror.ShowRemotePlayerInMirror`                           | `bool`   |      |
 | `PersonalMirror.ShowUIInMirror`                                     | `bool`   |      |
 | `PersonalMirror.WorldSpaceMirror`                                   | `bool`   |      |
+| `PIXEL_LIGHT_COUNT`                                                 | `int`    |      |
 | `PlayerHeight`                                                      | `float`  | meters |
 | `PREF_HAND_TRACKING_TUTORIAL_COMPLETED`                             | `bool`   |      |
 | `Preload_Worlds_HISTORY_{UserID}`                                   | `json`   | [`<History(WorldID)>`](#schema_history) |
@@ -371,6 +378,7 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `VRC_AFK_ENABLED`                                                   | `bool`   |      |
 | `VRC_ALLOW_AVATAR_COPYING`                                          | `bool`   |      |
 | `VRC_ALLOW_DIRECT_SHARES`                                           | `bool`   |      |
+| `VRC_ALLOW_DISCORD_FRIENDS`                                         | `bool`   |      |
 | `VRC_ALLOW_FOCUS_VIEW`                                              | `bool`   |      |
 | `VRC_ALLOW_PEDESTAL_SHARES`                                         | `bool`   |      |
 | `VRC_ALLOW_PRINTS`                                                  | `bool`   |      |
@@ -566,6 +574,9 @@ Many of these entries may be deprecated, migrated, inoperative, or otherwise use
 | `VRC_PRIORITIZE_DOWNLOAD_DISTANCE`                                  | `float`  |      |
 | `VRC_PRIORITIZE_FRIEND_DOWNLOADS`                                   | `bool`   |      |
 | `VRC_PRIORITIZE_MANUAL_DOWNLOADS`                                   | `bool`   |      |
+| `VRC_RANDOMIZE_DRONE`                                               | `bool`   |      |
+| `VRC_RANDOMIZE_PORTAL`                                              | `bool`   |      |
+| `VRC_RANDOMIZE_WARP_EFFECT`                                         | `bool`   |      |
 | `VRC_REDUCE_ANIMATIONS`                                             | `bool`   |      |
 | `VRC_SAFETY_LEVEL`                                                  | `int`    |      |
 | `VRC_SCREEN_BRIGHTNESS`                                             | `float`  |      |
