@@ -154,8 +154,15 @@ function UploadFileSimple(path filePath, string type, string fileId, fileObj the
 
 function UploadFileMultipart(path filePath, string type, string fileId, fileObj theFile, string mimeType, byte[] md5) -> bool
 {
-    var status = try vrcapi.get(`/file/{fileId}/{theFile.latestVersion}/{type}/status`)
-                 catch return false;
+    var status;
+    try
+    {
+        status = vrcapi.get(`/file/{fileId}/{theFile.latestVersion}/{type}/status`);
+    }
+    catch
+    {
+        return false;
+    }
     var nextPartNumber = 1;
     var etags = [];
     nextPartNumber += status.nextPartNumber;
@@ -166,8 +173,15 @@ function UploadFileMultipart(path filePath, string type, string fileId, fileObj 
     var buffer = new byte[CHUNK_SIZE * 2];
     for (var partNumber = nextPartNumber; partNumber <= parts; partNumber++)
     {
-        var start = try vrcapi.put(`/file/{fileId}/{theFile.latestVersion}/{type}/start?partNumber={partNumber}`)
-                    catch return false;
+        var start;
+        try
+        {
+            start = vrcapi.put(`/file/{fileId}/{theFile.latestVersion}/{type}/start?partNumber={partNumber}`);
+        }
+        catch
+        {
+            return false;
+        }
         var uploadUrl = start.url;
         if (uploadUrl === null || uploadUrl.isEmpty)
             return false;
