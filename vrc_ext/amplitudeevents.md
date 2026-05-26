@@ -40,13 +40,17 @@ The cache contains JSON data of the following format, although the specific prop
 
         "session_id": <integer>, // Unix timestamp (milliseconds) at which that the current client process was launched
 
-        "time": <integer>, // Unix timestamp (milliseconds) at which that this event was generated
+        "time": <integer?>, // Unix timestamp (milliseconds) at which that this event was generated
 
         "user_id": <string>, // UserID of the currently authenticated player, "usr_..."
 
         "user_properties": {
 
             // System information
+
+            "defaultFormatHDR": <string>, // Default binary HDR format, such as "R16G16B16A16_SFloat"
+
+            "defaultFormatLDR": <string>, // Default binary LDR format, such as "R8G8B8A8_SRGB"
 
             "deviceId": <string>, // Same as "device_id" above
 
@@ -61,6 +65,8 @@ The cache contains JSON data of the following format, although the specific prop
             "graphicsMemorySize": <integer>, // Graphics device VRAM (in MB) such as 12093
 
             "isGeForceNow": <boolean>, // Whether GeForceNow is running on the system, such as true
+
+            "IsNvidiaGeForceNow": <boolean>, // Whether GeForceNow is running on the system, such as true (duplicate)
 
             "isOnMeteredConnection": <boolean>, // Whether Internet connectivity is metered, such as having limited mobile data
 
@@ -142,17 +148,33 @@ The cache contains JSON data of the following format, although the specific prop
 
             "currentAvatarName": <string>, // Name of current avatar, such as "sacabambaspis"
 
+            "currentAvatarPerformance": <string>, // Performance of current avatar, such as "Excellent"
+
             "currentWorldId": <string>, // Id of current world, such as "local:error_2571820452604316", or "wrld_1a8b8684-3b19-4770-a4a7-288762f57b29"
 
             "currentWorldName": <string>, // Name of current world, such as "Error World", or "1's Optimized Box"
+
+            "currentlyappliedaccessoriesids": <array>, // IDs of currently applied avatar accessories, such as [ "avp_b3211b05-c460-46e6-81f3-52030e1f0707" ]
+
+            "currentlyappliedtotalaccessoriescount": <integer>, // Total number of currently applied avatar accessories, such as 1
+
+            "currentlyapplieduniqueaccessoriescount": <integer>, // Total number of unique currently applied avatar accessories, such as 1
 
             "current_drone_skin_id": <string>, // Name of selected drone skin, such as "default_drone", or "invt_3966d26e-ef96-47f0-ba59-e533e4de144e"
 
             "current_drone_skin_name": <string>, // Name of selected drone skin, such as "Default Drone", or "Trace Drone"
 
-            "current_warp_effect_id": <string>, // Name of selected warp effect, such as "none", or "invt_022f4c96-c803-46bc-87da-5ec650af4994"
+            "current_loading_screen_id": <string>, // Name of selected loading screen, such as "random", or "invt_e5398be4-2ef9-4fcc-849c-1e9dc771664a"
 
-            "current_warp_effect_name": <string>, // Name of selected warp effect, such as "none", or "Reference Cube Warp"
+            "current_loading_screen_name": <string>, // Name of selected warp effect, such as "Random", or "Classic Warp Tunnel"
+
+            "current_portal_skin_id": <string>, // Name of selected warp effect, such as "none", or "random"
+
+            "current_portal_skin_name": <string>, // Name of selected warp effect, such as "None", or "Random"
+
+            "current_warp_effect_id": <string>, // Name of selected warp effect, such as "none", "random", or "invt_022f4c96-c803-46bc-87da-5ec650af4994"
+
+            "current_warp_effect_name": <string>, // Name of selected warp effect, such as "none", "Random", or "Reference Cube Warp"
 
             "custom_emoji_count": <integer>, // Number of custom props, such as 15
 
@@ -170,9 +192,15 @@ The cache contains JSON data of the following format, although the specific prop
 
             "exclusive_sticker_count": <integer>, // Number of exclusive stickers owned, such as 24
 
+            "ips_category_weights": <array>, // IPS category weights, such as [ { "category": "announcement", "weight": 1 }, { "category": "informational", "weight": 89 }, { "category": "promotional", "weight": 10 } ]
+
+            "ips_segment": <string>, // IPS segment, such as "vrcPlus", or "nonVrcPlus"
+
             "joinedGroupIds": <array>, // IDs of joined groups, such as [ "grp_a2ba31eb-da7e-4b37-9562-7c0fa1872fd4", "grp_34e02a44-ca82-458f-904b-9a4b20869c77" ]
 
             "joinedGroupNames": <array>, // Name of joined groups, such as [ "Are You Following ToS?", "VRChat Open Beta" ]
+
+            "looksowned_count": <integer>, // Number of looks owned, such as 0
 
             "numberOfCustomEmoji": <integer>, // Current number of custom emoji uploaded, such as 15
 
@@ -180,9 +208,9 @@ The cache contains JSON data of the following format, although the specific prop
 
             "numberOfGroups": <integer>, // Total number of groups, such as 87
 
-            "numberOfPrintsInGallery": <integer>, // Current number of prints uploaded, such as 63
-
             "numberOfStickersInGallery": <integer>, // Current number of stickers uploaded, such as 17
+
+            "numPrintsInGallery": <integer>, // Current number of prints uploaded, such as 63
 
             "prop_group_count": <integer>, // Number of custom groups for props, such as 1
 
@@ -193,10 +221,14 @@ The cache contains JSON data of the following format, although the specific prop
             "subscriptionStore": <string>, // Which store to use for VRChat+ subscription purchases, such as "Steam"
 
             "subscriptionType": <string>, // Current VRChat+ subscription type, such as "vrchatplus-monthly"
-            
+
             "total_inventory_count": <integer>,
 
+            "totalaccessoriesownedcount": <integer>, // Current number of avatar accessories owned, such as 3
+
             "userIcons": <integer>, // Current number of user icons uploaded, such as 37
+
+            "vrcplus_subscriber_exclusive_prop_count": <integer>, // Number of vrcplus-exclusive props owned, such as 1
 
             // Usage information
 
@@ -312,7 +344,9 @@ Some of these events may be deprecated; this is simply a list of all known event
 Most events have the following properties:
 ```json
 {
+    "groupAccessType": <string?>,
     "instanceType": <integer|string>, // exact property type seems to vary between specific event type
+    "instanceTypeCombined": <string?>, // seems to mirror 'instanceType', but is only on newer events
     "locationId": <string>, // format: "{WorldID}:{InstanceID}"
     "position": <string>, // format: "({x}, {y}, {z})"
     "source": <string>, // always seems to be "client"
@@ -325,6 +359,7 @@ All events have all these properties unless otherwise indicated.
 
 ### `$exposure`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "flag_key": <string>,
@@ -332,10 +367,53 @@ All events have all these properties unless otherwise indicated.
 }
 ```
 
-### `Admin_AppClose`
+### `Accessory_Purchase_Clicked`
 
+This event is missing the Common Event Property `groupAccessType`.
 ```json
 {
+    "accessories": <array> [ // element type: <object>
+        {
+        "accessory_creator": <string?>,
+        "accessory_id": <string>, // format: AvatarPartID
+        "accessory_name": <string>,
+        "accessory_publisher": <string>,
+        "inventoryItemTemplateId": <string>, // format: TemplateID
+        "inventoryItemType": <string>
+        },
+    ],
+    "avatar_id": <string>, // format: AvatarID
+    "description": <string>,
+    "lastupdateddate": <string>, // format: "MM/dd/yyyy HH:mm:ss"
+    "listingDisplayName": <string>,
+    "listingId": <string>, // format: ListingID
+    "listingSubtitle": <string>,
+    "listingType": <string>,
+    "listing_duration": <string>,
+    "original_price_credits": <integer>,
+    "price": <integer>
+}
+```
+
+### `Admin_AppClose`
+
+This event is missing the Common Event Property `instanceTypeCombined`.
+```json
+{
+    "_lastWorldNumberOfCustomEmojiSeen": <integer>,
+    "_lastWorldNumberOfCustomEmojiSent": <integer>,
+    "_lastWorldNumberOfDefaultEmojiSeen": <integer>,
+    "_lastWorldNumberOfDefaultEmojiSent": <integer>,
+    "_lastWorldNumberOfEmojiSeen": <integer>,
+    "_lastWorldNumberOfEmojiSent": <integer>,
+    "_lastWorldNumberOfExclusiveEmojiSeen": <integer>,
+    "_lastWorldNumberOfExclusiveEmojiSent": <integer>,
+    "_lastWorldNumberOfPremiumEmojiSeen": <integer>,
+    "_lastWorldNumberOfPremiumEmojiSent": <integer>,
+    "_lastWorldRadialEmojiMenuOpenCount": <integer>,
+    "_lastWorldRadialItemMenuOpenCount": <integer>,
+    "_lastWorldRadialMenuOpenCount": <integer>,
+    "_lastWorldRadialStickerMenuOpenCount": <integer>,
     "avatarIdsEncountered": <array>, // element type: <string> // format: AvatarID
     "lastWorldBatteryLevel": <double>,
     "lastWorldBatteryLevelChange": <double>,
@@ -348,7 +426,7 @@ All events have all these properties unless otherwise indicated.
     "lastWorldMeanTextMessageCharacters": <integer>,
     "lastWorldMicToggleCount": <string>,
     "lastWorldName": <string>,
-    "lasWorldNumberOfCustomEmojiSent": <integer>,
+    "lastWorldNumberOfCustomEmojiSent": <integer>,
     "lastWorldNumberOfEmojiSent": <integer>,
     "lastWorldNumberOfItemsReceivedDirectly": <integer>,
     "lastWorldNumberOfItemsReceivedViaPedestal": <integer>,
@@ -367,6 +445,7 @@ All events have all these properties unless otherwise indicated.
     "lastWorldPublicOccupants": <integer>,
     "lastWorldRegion": <string>,
     "lastWorldSDKVersion": <string>,
+    "lastWorldStats stat {min|max|total|mean|variance|timeWeightedMean|timeWeightedVarience} {name...}": <double>, // numerous properties of this format
     "lastWorldStatusUpdatesCount": <integer>,
     "lastWorldTags_world": <array>, // element type: <string>
     "lastWorldTimeSpentInWorld": <double>,
@@ -375,13 +454,13 @@ All events have all these properties unless otherwise indicated.
     "lastWorldTotalTimeHearingSpeech": <double>,
     "lastWorldTotalTimeSpeaking": <double>,
     "lastWorldTotalTimeSpentLoadingAvatars": <double>,
-    "lastWorldUnityVersion": <string>,
-    "lastWorldStats stat {min|max|total|mean|variance|timeWeightedMean|timeWeightedVarience} {name...}": <double> // numerous properties of thie format
+    "lastWorldUnityVersion": <string>
 }
 ```
 
 ### `Admin_AppError`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "ActiveReason": <string>,
@@ -395,6 +474,7 @@ All events have all these properties unless otherwise indicated.
     "NetworkClientState": <integer>,
     "PhotonTime": <double>,
     "RawCause": <string>,
+    "SystemConnectionSummary": <integer?>,
     "UnityInternetReachability": <string>,
     "error": <string>,
     "reason": <string>,
@@ -413,24 +493,44 @@ This event only has the Common Event Property `source`.
 
 ### `Application_UncleanShutdownDetected`
 
-This event only has some Common Event Properties: `worldId`, `worldName`, `source`.
+This event only has some Common Event Properties: `source`, `worldId`, `worldName`.
 ```json
 {
     "lastKnownContext": <string>
 }
 ```
 
+### `Avatar_Accessory_ViewDetails`
+
+This event is missing the Common Event Property `groupAccessType`.
+```json
+{
+    "accessory_creator": <string>,
+    "accessory_id": <string>, // format: AvatarPartID
+    "accessory_name": <string>,
+    "accessory_publisher": <string>,
+    "attribution": <string>,
+    "category": <string>,
+    "description": <string>,
+    "inventoryItemTemplateId": <string>, // format: TemplateID
+    "inventoryItemType": <string>,
+    "lastupdateddate": <string> // format: "MM/dd/yyyy HH:mm:ss"
+}
+```
+
 ### `Avatar_Tab_Viewed`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 
 ### `Avatar_ViewAll_Page_View`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "attribution": <string>,
-    "avatars_clicked": <array>, // element type: <string> // format: AvatarID
+    "avatars_clicked": <array>, // element type: <string>
     "avatars_clicked_count": <integer>,
-    "avatars_seen": <array>, // element type: <string> // format: AvatarID
+    "avatars_seen": <array>, // element type: <string>
     "rowId": <string>,
     "rowName": <string>
 }
@@ -438,8 +538,10 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Avatar_ViewDetails`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
     "avatarDisplayName": <string>,
     "avatarId": <string>, // format: AvatarID
     "avatarStyle": <array>, // element type: <string>
@@ -450,13 +552,56 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
     "secondary_style": <string>,
     "sellerDisplayName": <string>,
     "sellerId": <string>,
-    "tags": <array>, // element type: <string>
-    "attribution": <string>
+    "tags": <array> // element type: <string>
+}
+```
+
+### `Avatar_content_clicked`
+
+This event is missing the Common Event Property `groupAccessType`.
+```json
+{
+    "accessories": <array> [ // element type: <object>
+        {
+        "accessory_copies_added": <integer>,
+        "accessory_creator": <string?>,
+        "accessory_id": <string>, // format: AvatarPartID
+        "accessory_name": <string>,
+        "accessory_publisher": <string>,
+        "category": <string>,
+        "description": <string>,
+        "inventoryItemTemplateId": <string>, // format: TemplateID
+        "inventoryItemType": <string>,
+        "lastupdateddate": <string> // format: date-time-instant
+        },
+    ],
+    "accessory_creator": <string>,
+    "accessory_publisher": <string>,
+    "avatar_id": <string>, // format: AvatarID
+    "content_type": <string>,
+    "description": <string>,
+    "lastupdateddate": <string>, // format: date-time-instant
+    "look_id": <string>,
+    "look_name": <string>,
+    "ui_location": <string>,
+    "user_id": <string> // format: UserID
+}
+```
+
+### `Avatar_content_viewed`
+
+This event is missing the Common Event Property `groupAccessType`.
+```json
+{
+    "attribution": <string>,
+    "ui_location": <string>,
+    "user_id": <string> // format: UserID
 }
 ```
 
 ### `Calendar_Open`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "attribution": <string>
@@ -465,6 +610,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Campaign_Button_Clicked`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "campaignName": <string>,
@@ -481,6 +627,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Campaign_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "attributionType": <string>,
@@ -498,6 +645,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Candy_Collected`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "candy_type": <string>,
@@ -507,6 +655,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `ColorPaletteChange`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "ID": <string>
@@ -515,30 +664,35 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Color_Profile_Saved`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "color_profile_type": <string>,
-    "drone_skin_is_equipped": <boolean>,
-    "drone_skin_asset_bundle_id": <string>,
-    "drone_skin_id": <string>, // format: ItemID
+    "drone_skin_asset_bundle_id": <string>, // format: AssetBundleID
+    "drone_skin_id": <string>, // format: DroneSkinID
     "drone_skin_is_default": <boolean>,
-    "drone_skin_name": <string>
+    "drone_skin_is_equipped": <boolean>,
+    "drone_skin_name": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Drone_Skin_Changed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "drone_skin_asset_bundle_id": <string>,
-    "drone_skin_id": <string>, // format: ItemID
+    "drone_skin_asset_bundle_id": <string>, // format: AssetBundleID
+    "drone_skin_id": <string>, // format: DroneSkinID
     "drone_skin_is_default": <boolean>,
-    "drone_skin_name": <string>
+    "drone_skin_name": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Emoji_Spawned`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "count_nearby_users": <integer>,
@@ -549,12 +703,14 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
     "inventory_template_id": <string>, // format: TemplateID
     "is_animated": <boolean>,
     "is_premium": <boolean>,
-    "spawn_source": <string>
+    "spawn_source": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Event_Joined`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "eventCategory": <string>,
@@ -579,6 +735,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Event_Shared`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "eventCategory": <string>,
@@ -603,6 +760,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Event_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "eventCategory": <string>,
@@ -627,6 +785,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Event_ViewedOnWebsite`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "eventCategory": <string>,
@@ -651,6 +810,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Explore_Avatars_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "avatars_clicked": <array>, // element type: <string>
@@ -662,6 +822,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Feedback_RemoveFeedback`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "category": <string>,
@@ -674,25 +835,28 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Feedback_ReportContent`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "userInSameInstance": <boolean>,
-    "instanceAgeGated": <boolean>,
     "category": <string>,
     "contentId": <string>, // format: some ID
     "contentName": <string>,
     "contentType": <string>,
-    "reason": <string>
+    "instanceAgeGated": <boolean>,
+    "reason": <string>,
+    "userInSameInstance": <boolean>
 }
 ```
 
 ### `Filter_AvatarFilter`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "attribution": <string>,
     "filter_availability": <string>,
     "filter_performance": <string>,
+    "filter_platform": <string>,
     "filter_results_count": <integer>,
     "filter_selection_count": <integer>,
     "filter_stylesIds": <array>, // element type: <string>
@@ -705,8 +869,57 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 }
 ```
 
+### `First_Action_Menu_Open`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+
+### `First_Avatar_Change`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "avatarChangeMethod": <string>,
+    "avatarId": <string> // format: AvatarID
+}
+```
+
+### `First_Main_Menu_Open`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "pageName": <string>
+}
+```
+
+### `First_Movement`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+
+### `First_Quick_Menu_Open`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "pageName": <string>
+}
+```
+
+### `First_Wing_Menu_Open`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "isMainMenuWing": <boolean>,
+    "originPageName": <string>,
+    "pageName": <string>,
+    "wingType": <integer>
+}
+```
+
 ### `Inventory_BundleClaimed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "bundle_name": <string>,
@@ -719,6 +932,7 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Inventory_EditCustomActionMenuGroup`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "group_renamed": <boolean>,
@@ -731,9 +945,22 @@ This event only has some Common Event Properties: `worldId`, `worldName`, `sourc
 
 ### `Inventory_MenuOpened`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "attribution": <string>
+}
+```
+
+### `Loading_Screen_Changed`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "loading_screen_asset_bundle_id": <string>, // format: AssetBundleID
+    "loading_screen_id": <string>,
+    "loading_screen_name": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
@@ -752,6 +979,7 @@ This event only has the Common Event Property `source`.
 
 ### `Login_ModerationCheckFailed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "error": <string>
@@ -760,6 +988,7 @@ This event only has the Common Event Property `source`.
 
 ### `MainMenu_OpenVRChatPlusPage`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "ipsJourney": <array>, // element type: <string>
@@ -769,72 +998,121 @@ This event only has the Common Event Property `source`.
 
 ### `MainMenu_VRChatPlus_ClickMonthly`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "uiSource": <string>
 }
 ```
 
-### `Marketplace_Avatars_Viewed`
+### `Marketplace_Accessories_Viewed`
 
+This event is missing the Common Event Property `groupAccessType`.
 ```json
 {
-    "avatars_clicked": <array>, // element type: <string>
-    "avatars_clicked_count": <integer>,
-    "avatars_seen": <array>, // element type: <string>
+    "accessory_listings_clicked": <array>, // element type: <string>
+    "accessory_listings_clicked_count": <integer>,
+    "accessory_listings_seen": <array>, // element type: <string>
+    "attribution": <string>,
     "attribution_ips_id": <string>, // format: IpsID
     "tab_exited_on": <string>,
     "time_on_tab_seconds": <double>,
-    "viewing_as_admin": <boolean>,
-    "attribution": <string>
+    "viewing_as_admin": <boolean>
+}
+```
+
+### `Marketplace_Accessory_Clicked`
+
+This event is missing the Common Event Property `groupAccessType`.
+```json
+{
+    "accessories": <array> [ // element type: <object>
+        {
+        "accessory_creator": <string?>,
+        "accessory_id": <string>, // format: AvatarPartID
+        "accessory_name": <string>,
+        "accessory_publisher": <string>,
+        "inventoryItemTemplateId": <string>, // format: TemplateID
+        "inventoryItemType": <string>
+        },
+    ],
+    "description": <string>,
+    "lastupdateddate": <string>, // format: "MM/dd/yyyy HH:mm:ss"
+    "listingDisplayName": <string>,
+    "listingId": <string>, // format: ListingID
+    "listingSubtitle": <string>,
+    "listingType": <string>,
+    "listing_duration": <string>,
+    "original_price_credits": <integer>,
+    "price": <integer>
+}
+```
+
+### `Marketplace_Avatars_Viewed`
+
+This event is missing the Common Event Property `instanceTypeCombined`.
+```json
+{
+    "attribution": <string>,
+    "attribution_ips_id": <string>, // format: IpsID
+    "avatars_clicked": <array>, // element type: <string>
+    "avatars_clicked_count": <integer>,
+    "avatars_seen": <array>, // element type: <string>
+    "tab_exited_on": <string>,
+    "time_on_tab_seconds": <double>,
+    "viewing_as_admin": <boolean>
 }
 ```
 
 ### `Marketplace_Exclusive_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
+    "attribution_ips_id": <string>, // format: IpsID
     "listings_seen_count": <integer>,
     "listings_seen_ids": <array>, // element type: <string>
-    "attribution_ips_id": <string>, // format: IpsID
     "tab_exited_on": <string>,
     "time_on_tab_seconds": <double>,
-    "viewing_as_admin": <boolean>,
-    "attribution": <string>
+    "viewing_as_admin": <boolean>
 }
 ```
 
 ### `Marketplace_Groups_Store_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
+    "attribution_ips_id": <string>, // format: IpsID
     "groups_seen_count": <integer>,
     "groups_seen_ids": <array>, // element type: <string>
-    "attribution_ips_id": <string>, // format: IpsID
     "tab_exited_on": <string>,
     "time_on_tab_seconds": <double>,
-    "viewing_as_admin": <boolean>,
-    "attribution": <string>
+    "viewing_as_admin": <boolean>
 }
 ```
 
 ### `Marketplace_World_Store_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "authors_seen_ids": <array>, // element type: <string>
-    "worlds_seen_count": <integer>,
-    "worlds_seen_ids": <array>, // element type: <string>
+    "attribution": <string>,
     "attribution_ips_id": <string>, // format: IpsID
+    "authors_seen_ids": <array>, // element type: <string>
     "tab_exited_on": <string>,
     "time_on_tab_seconds": <double>,
     "viewing_as_admin": <boolean>,
-    "attribution": <string>
+    "worlds_seen_count": <integer>,
+    "worlds_seen_ids": <array> // element type: <string>
 }
 ```
 
 ### `Menu_addWorldToPlaylist`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "playlistName": <string>,
@@ -844,6 +1122,7 @@ This event only has the Common Event Property `source`.
 
 ### `Moderation_BlockAvatar`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "avatarId": <string> // format: AvatarID
@@ -852,6 +1131,7 @@ This event only has the Common Event Property `source`.
 
 ### `Moderation_BlockUser`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "targetUserId": <string> // format: UserID
@@ -860,6 +1140,7 @@ This event only has the Common Event Property `source`.
 
 ### `Moderation_ChatboxMuteUser`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "targetUserId": <string> // format: UserID
@@ -868,17 +1149,19 @@ This event only has the Common Event Property `source`.
 
 ### `Moderation_HideUserAvatar`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
-    "hideGlobally": <boolean>,
     "avatarId": <string>, // format: AvatarID
     "avatarName": <string>,
+    "hideGlobally": <boolean>,
     "targetUserId": <string> // format: UserID
 }
 ```
 
 ### `Moderation_ResetShowUserAvatarToDefault`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "avatarId": <string>, // format: AvatarID
@@ -889,19 +1172,22 @@ This event only has the Common Event Property `source`.
 
 ### `Moderation_ShowUserAvatar`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "hideGlobally": <boolean>,
     "avatarId": <string>, // format: AvatarID
     "avatarName": <string>,
+    "hideGlobally": <boolean>,
     "targetUserId": <string> // format: UserID
 }
 ```
 
 ### `Mon_ConfirmPurchase`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
     "collab_user_id": <string>, // format: UserID
     "hasAvatar": <boolean>,
     "hasEnoughCredits": <boolean>,
@@ -909,6 +1195,7 @@ This event only has the Common Event Property `source`.
     "listingDisplayName": <string>,
     "listingId": <string>, // format: ListingID
     "listingType": <string>,
+    "listing_duration": <string>,
     "notInWorldPurchaseError": <boolean>,
     "original_price_credits": <integer>,
     "price": <integer>,
@@ -919,13 +1206,16 @@ This event only has the Common Event Property `source`.
         "productType": <string>,
         "itemType": <string>,
         "inventoryItemTemplateId": <string> // format: InventoryTemplateID
-        },    ],
-    "sellerId": <string>
+        },
+    ],
+    "sellerId": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Mon_Item_View_Details`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "inventoryItemTemplateId": <string>, // format: TemplateID
@@ -942,8 +1232,10 @@ This event only has the Common Event Property `source`.
 
 ### `Mon_ListingViewed`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
     "collab_user_id": <string>, // format: UserID
     "discount_type": <string>,
     "hasAvatar": <boolean>,
@@ -951,6 +1243,7 @@ This event only has the Common Event Property `source`.
     "listingDisplayName": <string>,
     "listingId": <string>, // format: ListingID
     "listingType": <string>,
+    "listing_duration": <string>,
     "original_price_credits": <integer>,
     "price": <integer>,
     "products": <array> [ // element type: <object>
@@ -960,31 +1253,33 @@ This event only has the Common Event Property `source`.
         "productType": <string>,
         "itemType": <string>,
         "inventoryItemTemplateId": <string> // format: InventoryTemplateID
-        },    ],
+        },
+    ],
     "sellerId": <string>,
-    "subscriberExclusive": <boolean>,
-    "attribution": <string>
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Mon_Marketplace_ViewWallet`
 
+This event is missing the Common Event Property `groupAccessType`.
 ```json
 {
+    "attribution": <string>,
     "info": <string>,
-    "instanceTypeCombined": <string>,
     "locationid": <string>,
     "worldid": <string>, // format: WorldID
-    "worldname": <string>,
-    "attribution": <string>
+    "worldname": <string>
 }
 ```
 
 ### `Mon_ReadTiliaTOS`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `Mon_StorePageOpened`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "attributionType": <string>,
@@ -1000,9 +1295,11 @@ This event only has the Common Event Property `source`.
 
 ### `My_Avatars_Viewed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `Notification_Response`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "notification": <string>,
@@ -1012,6 +1309,7 @@ This event only has the Common Event Property `source`.
 
 ### `Notification_SendPhotoInvite`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "hasCustomMessage": <integer>,
@@ -1021,31 +1319,35 @@ This event only has the Common Event Property `source`.
 }
 ```
 
-### `Prints_DownloadPrint`
+### `Portal_Skin_Changed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "userIsAuthor": <boolean>,
+    "portal_skin_id": <string>,
+    "portal_skin_is_default": <boolean>,
+    "portal_skin_name": <string>,
+    "subscriberExclusive": <string>
+}
+```
+
+### `Prints_DownloadPrint`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
     "authorId": <string>, // format: UserID
     "note": <string>,
     "printDate": <string>, // format: local-date
     "printWorldId": <string>, // format: WorldID
-    "userId": <string> // format: UserID
-}
-```
-
-### `Portal_Skin_Changed`
-
-```json
-{
-    "portal_skin_id": <string>,
-    "portal_skin_is_default": <string>,
-    "portal_skin_name": <string>
+    "userId": <string>, // format: UserID
+    "userIsAuthor": <boolean>
 }
 ```
 
 ### `Prints_HidePrint`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "authorId": <string>, // format: UserID
@@ -1058,6 +1360,7 @@ This event only has the Common Event Property `source`.
 
 ### `Prints_SavePrint`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "authorId": <string>, // format: UserID
@@ -1070,6 +1373,7 @@ This event only has the Common Event Property `source`.
 
 ### `Promotion_Notification_Event`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "id": <string>
@@ -1078,10 +1382,12 @@ This event only has the Common Event Property `source`.
 
 ### `Prop_Interaction`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "inventoryItemTemplateId": <string>, // format: TemplateID
     "item_id": <string>, // format: ItemID
+    "owner_id": <string>,
     "prop_id": <string>, // format: PropID
     "prop_name": <string>,
     "prop_version": <integer>
@@ -1090,15 +1396,16 @@ This event only has the Common Event Property `source`.
 
 ### `Prop_Removed`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "active_duration_ms": <integer>,
-    "prop_despawn_type": <string>,
-    "prop_interactions_other": <integer>,
-    "prop_interactions_spawner": <integer>,
     "inventoryItemTemplateId": <string>, // format: TemplateID
     "item_id": <string>, // format: ItemID
+    "prop_despawn_type": <string>,
     "prop_id": <string>, // format: PropID
+    "prop_interactions_other": <integer>,
+    "prop_interactions_spawner": <integer>,
     "prop_name": <string>,
     "prop_version": <integer>
 }
@@ -1106,24 +1413,27 @@ This event only has the Common Event Property `source`.
 
 ### `Prop_Spawned`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "count_nearby_users": <integer>,
+    "inventoryItemTemplateId": <string>, // format: TemplateID
+    "item_id": <string>, // format: ItemID
     "prop_attachment_type": <integer>,
     "prop_creation_date": <string>,
     "prop_creator_user_id": <string>, // format: UserID
-    "prop_interaction_types": <array>, // element type: <string>
-    "prop_spawn_type": <string>,
-    "inventoryItemTemplateId": <string>, // format: TemplateID
-    "item_id": <string>, // format: ItemID
     "prop_id": <string>, // format: PropID
+    "prop_interaction_types": <array>, // element type: <string>
     "prop_name": <string>,
-    "prop_version": <integer>
+    "prop_spawn_type": <string>,
+    "prop_version": <integer>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Safety_ChangeSafetyLevel`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "newSafetyLevel": <integer>,
@@ -1135,9 +1445,11 @@ This event only has the Common Event Property `source`.
 
 ### `Safety_PanicModeActivated`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `Search_ManualSearch`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "communityLabsEnabled": <boolean>,
@@ -1154,18 +1466,23 @@ This event only has the Common Event Property `source`.
 
 ### `Setting_DiscordLinkInitiated`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `Setting_HorizonAdjustEnabled`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `Setting_PersonalMirrorEnabled`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 
 ### `Signup_AccountInfoUpdated`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`, `position`.
 
 ### `Signup_AgreeToTOS`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`, `position`.
 ```json
 {
     "PrivacyPolicyVersion": <integer>,
@@ -1175,6 +1492,7 @@ This event only has the Common Event Property `source`.
 
 ### `Signup_ViewTOSScreen`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "PrivacyPolicyVersion": <integer>,
@@ -1184,28 +1502,31 @@ This event only has the Common Event Property `source`.
 
 ### `Social_AcceptFriendRequest`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
-    "viewedMutuals": <string>,
-    "targetUserId": <string> // format: UserID
+    "targetUserId": <string>, // format: UserID
+    "viewedMutuals": <string>
 }
 ```
 
 ### `Social_AddFavorite`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "id": <string>,
     "isVRCPlus_playlist": <boolean>,
     "name": <string>,
     "playlistName": <string>,
-    "playlistPosition"; <integer>,
+    "playlistPosition": <integer>,
     "type": <string>
 }
 ```
 
 ### `Social_Boop`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "emojiId": <string>, // format: EmojiID
@@ -1218,6 +1539,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_CreatePrint`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "note": <string>,
@@ -1231,6 +1553,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_CreateSticker`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "sourceID": <string>,
@@ -1243,6 +1566,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_InviteResponse`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "hasInviteMessage": <boolean>,
@@ -1257,6 +1581,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_PlacePrint`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "authorId": <string>, // format: UserID
@@ -1269,19 +1594,22 @@ This event only has the Common Event Property `source`.
 
 ### `Social_PlaceSticker`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
-    "animated": <boolean>,
+    "is_animated": <boolean>,
     "sourceUI": <string>,
     "stickerCollection": <string>,
-    "stickerType": <string>,
     "stickerID": <string>, // format: StickerID
-    "stickerURL": <string>
+    "stickerType": <string>,
+    "stickerURL": <string>,
+    "subscriberExclusive": <boolean>
 }
 ```
 
 ### `Social_ReceiveSharedContent`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "contentType": <string>,
@@ -1292,6 +1620,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_RemoveFavorite`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "id": <string>,
@@ -1302,28 +1631,41 @@ This event only has the Common Event Property `source`.
 
 ### `Social_SendFriendRequest`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
-    "viewedMutuals": <string>,
-    "targetUserId": <string> // format: UserID
+    "targetUserId": <string>, // format: UserID
+    "viewedDiscordFriend": <string>,
+    "viewedMutuals": <string>
 }
 ```
 
 ### `Social_ShareContent`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
-    "durationType": <string>,
-    "targets": <array>, // element type: <string>
-    "visibility": <string>,
     "contentType": <string>,
+    "durationType": <string>,
     "sharingMode": <string>,
-    "userId": <string> // format: UserID
+    "targets": <array>, // element type: <string>
+    "userId": <string>, // format: UserID
+    "visibility": <string>
+}
+```
+
+### `Social_Unfriend`
+
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
+```json
+{
+    "targetUserId": <string> // format: UserID
 }
 ```
 
 ### `Social_UpdatePronouns`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "text": <string>,
@@ -1333,6 +1675,7 @@ This event only has the Common Event Property `source`.
 
 ### `Social_UpdateStatus`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "text": <string>,
@@ -1344,6 +1687,7 @@ This event only has the Common Event Property `source`.
 
 ### `Sub_EmojiUploaded`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "animation": <string>,
@@ -1353,6 +1697,7 @@ This event only has the Common Event Property `source`.
 
 ### `Sub_ProfileImageChangedClient`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "switchingToAvatarImage": <boolean>
@@ -1361,9 +1706,11 @@ This event only has the Common Event Property `source`.
 
 ### `SubscribeReminderClicked`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 
 ### `UI_IPSBannerClicked`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "attribution": <string>,
@@ -1378,16 +1725,19 @@ This event only has the Common Event Property `source`.
 
 ### `Warp_Effect_Changed`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
-    "warp_effect_asset_bundle_id": <string>,
-    "warp_effect_id": <string>,
+    "subscriberExclusive": <boolean>,
+    "warp_effect_asset_bundle_id": <string>, // format: AssetBundleID
+    "warp_effect_id": <string>, // format: WarpEffectID
     "warp_effect_name": <string>
 }
 ```
 
 ### `World_CustomEvent`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "eventName": <string>,
@@ -1397,15 +1747,17 @@ This event only has the Common Event Property `source`.
 
 ### `World_EnterWorld`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
+    "attributionType": <string>,
     "avatarIdsEncountered": <array>, // element type: <string> // format: AvatarID
     "bytesDownloaded": <integer>,
     "bytesDownloadedTotal": <integer>,
     "bytesPrecached": <integer>,
     "friendsOnEnter": <integer>,
     "goButtonTime": <integer>,
-    "groupAccessType": <string>,
     "groupId": <string>, // format: GroupID
     "groupName": <string>,
     "instanceCode": <string>,
@@ -1414,6 +1766,7 @@ This event only has the Common Event Property `source`.
     "ipsBannersClickedCounts": <array>, // element type: <integer>
     "ipsBannersClickedIds": <array>, // element type: <string>
     "isHome": <boolean>,
+    "lasWorldNumberOfCustomEmojiSent": <integer>,
     "lastLocationId": <string>,
     "lastWorldAvatarChangesCount": <integer>,
     "lastWorldAvatarChanges_ChangeMethods": <array>, // element type: <string>
@@ -1445,7 +1798,6 @@ This event only has the Common Event Property `source`.
     "lastWorldMeanTextMessageCharacters": <integer>,
     "lastWorldMicToggleCount": <string>,
     "lastWorldName": <string>,
-    "lasWorldNumberOfCustomEmojiSent": <integer>,
     "lastWorldNumberOfEmojiSent": <integer>,
     "lastWorldNumberOfItemsReceivedDirectly": <integer>,
     "lastWorldNumberOfItemsReceivedViaPedestal": <integer>,
@@ -1461,9 +1813,11 @@ This event only has the Common Event Property `source`.
     "lastWorldPrecacheSkippedWorlds": <?>, // exact type unknown
     "lastWorldPrecachedWorlds": <?>, // exact type unknown
     "lastWorldPrivateOccupants": <integer>,
+    "lastWorldProfilerSamples sample {max|mean|timeWeightedMean} {name...}": <double>, // numerous properties of this format
     "lastWorldPublicOccupants": <integer>,
     "lastWorldRegion": <string>,
     "lastWorldSDKVersion": <string>,
+    "lastWorldStats stat {min|max|total|mean|variance|timeWeightedMean|timeWeightedVarience} {name...}": <double>, // numerous properties of this format
     "lastWorldStatusUpdatesCount": <integer>,
     "lastWorldTags_world": <array>, // element type: <string>
     "lastWorldTimeSpentInWorld": <double>,
@@ -1473,6 +1827,8 @@ This event only has the Common Event Property `source`.
     "lastWorldTotalTimeSpeaking": <double>,
     "lastWorldTotalTimeSpentLoadingAvatars": <double>,
     "lastWorldUnityVersion": <string>,
+    "menu": <string>,
+    "pageName": <string>,
     "region": <string>,
     "transitionMenuActionID": <string>,
     "transitionPortalType": <string>,
@@ -1480,49 +1836,18 @@ This event only has the Common Event Property `source`.
     "userCompletedTransition": <boolean>,
     "worldDownloadingTime": <double>,
     "worldLoadingTime": <double>,
-    "worldLoadingTime_WarmShaders": <integer>,
-    "worldLoadingTime_attachCallbackHandlers": <integer>,
-    "worldLoadingTime_clampAudioSources": <integer>,
-    "worldLoadingTime_collectPlayerMetadata": <integer>,
-    "worldLoadingTime_collectWorldMetadata": <integer>,
-    "worldLoadingTime_configureCoreObjects": <integer>,
-    "worldLoadingTime_ensureHeapSize": <integer>,
-    "worldLoadingTime_enterWorld": <integer>,
-    "worldLoadingTime_executeBufferedEvents": <integer>,
-    "worldLoadingTime_finalizeScene": <integer>,
-    "worldLoadingTime_finish": <integer>,
-    "worldLoadingTime_fixMaterials": <integer>,
-    "worldLoadingTime_instantiateScene": <integer>,
-    "worldLoadingTime_onLoadingSceneActive": <integer>,
-    "worldLoadingTime_preconfiguration": <integer>,
-    "worldLoadingTime_preloadPrefabs": <integer>,
-    "worldLoadingTime_processSceneObjects": <integer>,
-    "worldLoadingTime_processTasksBeforeWorldEnter": <integer>,
-    "worldLoadingTime_readyCoreObjects": <integer>,
-    "worldLoadingTime_readySceneObjects": <integer>,
-    "worldLoadingTime_requestBufferedEvents": <integer>,
-    "worldLoadingTime_rpcManager": <integer>,
-    "worldLoadingTime_sendInstanceMetadata": <integer>,
-    "worldLoadingTime_spawnPlayers": <integer>,
-    "worldLoadingTime_udonBlacklist": <integer>,
-    "worldLoadingTime_uimanagerInit": <integer>,
-    "worldLoadingTime_waitForPlayerData": <integer>,
-    "worldLoadingTime_waitForPlayerInitialize": <integer>,
-    "worldLoadingTime_waitForRecoveryData": <integer>,
+    "worldLoadingTime.{*}": <integer>, // numerous properties of this format
     "worldPrivateOccupants": <integer>,
     "worldPublicOccupants": <integer>,
     "worldTotalWaitingTime": <double>,
     "worldUdonProgramTotalBytes": <integer>,
-    "worldUnityVersion": <string>,
-    "lastWorldStats stat {min|max|total|mean|variance|timeWeightedMean|timeWeightedVarience} {name...}": <double>, // numerous properties of thie format
-    "lastWorldProfilerSamples sample {max|mean|timeWeightedMean} {name...}": <double>, // numerous properties of thie format
-    "menu": <string>,
-    "pageName": <string>
+    "worldUnityVersion": <string>
 }
 ```
 
 ### `World_UpdateInstanceSettings`
 
+This event is missing some Common Event Properties: `groupAccessType`, `instanceTypeCombined`.
 ```json
 {
     "ageGate": <boolean>,
@@ -1539,17 +1864,19 @@ This event only has the Common Event Property `source`.
     "instanceSetting_prints": <string>,
     "instanceSetting_props": <string>,
     "instanceSetting_stickers": <string>,
+    "instanceUserCount": <integer>,
+    "menu": <string>,
+    "pageName": <string>,
+    "worldAuthorId": <string>, // format: UserID
+    "worldAuthorName": <string>,
+    "worldCapacity": <integer>,
+    "worldCreatedAt": <string>, // format: local-date-time
     "worldDefault_drones": <string>,
     "worldDefault_emoji": <string>,
     "worldDefault_pedestals": <string>,
     "worldDefault_prints": <string>,
     "worldDefault_props": <string>,
     "worldDefault_stickers": <string>,
-    "instanceUserCount": <integer>,
-    "worldAuthorId": <string>, // format: UserID
-    "worldAuthorName": <string>,
-    "worldCapacity": <integer>,
-    "worldCreatedAt": <string>, // format: local-date-time
     "worldFavoritedCount": <integer>,
     "worldHeat": <integer>,
     "worldLabsPublicationDate": <string>, // format: date-time
@@ -1559,14 +1886,13 @@ This event only has the Common Event Property `source`.
     "worldReleaseStatus": <string>,
     "worldTags": <array>, // element type: <string>
     "worldUpdatedAt": <string>, // format: local-date-time
-    "worldVisits": <integer>,
-    "menu": <string>,
-    "pageName": <string>
+    "worldVisits": <integer>
 }
 ```
 
 ### `group_tab_exit`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "exit_view_group_id": <string>, // format: GroupID
@@ -1578,6 +1904,7 @@ This event only has the Common Event Property `source`.
 
 ### `group_view_details`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
     "group_id": <string>, // format: GroupID
@@ -1587,13 +1914,15 @@ This event only has the Common Event Property `source`.
 
 ### `live_now_exit`
 
+This event is missing the Common Event Property `instanceTypeCombined`.
 ```json
 {
+    "attribution": <string>,
     "events_seen": <array>, // element type: <string>
     "exit_reason": <string>,
     "shelf_names": <array>, // element type: <string>
     "shelves_scrolled": <array>, // element type: <string>
-    "shelves_seen": <string>,
-    "attribution": <string>
+    "shelves_seen": <string>
 }
 ```
+
